@@ -14,18 +14,14 @@ public class FallState : IState
     public void Enter()
     {
         _animation.FallAnimation(true);
-        Debug.Log("enter fall");
     }
 
     public void Execute()
     {  
-        Debug.Log("exe fall");
     }
 
     public void Exit()
     {
         _animation.FallAnimation(false);
-
-        Debug.Log("exit fall");
     }
 }

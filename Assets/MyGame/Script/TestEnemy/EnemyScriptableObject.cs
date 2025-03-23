@@ -93,7 +93,7 @@ public class EnemyScriptableObject : ScriptableObject
         
         attackConfiguration.SetupEnemy(enemy);
 
-        enemy.agent.stoppingDistance = Mathf.Max(0.5f, attackConfiguration.attackRadius * 0.8f);
+        enemy.agent.stoppingDistance = stoppingDistance;
 
         enemy.healthSlider.maxValue = health;
         enemy.healthSlider.value = health;

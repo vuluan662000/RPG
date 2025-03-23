@@ -35,6 +35,10 @@ public class PlayerAnimation : MonoBehaviour
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         return stateInfo.length;
     }
-
+    public void AttackAnimationCombo(int comboIndex)
+    {
+        _animator.SetInteger("ComboIndex", comboIndex);
+        _animator.SetTrigger("Attack");
+    }
 
 }

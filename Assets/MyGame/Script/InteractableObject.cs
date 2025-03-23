@@ -12,6 +12,6 @@ public class InteractableObject : MonoBehaviour
     }
     public void Interact()
     {
-        Debug.Log("subb");
+       // Debug.Log("subb");
     }
 }

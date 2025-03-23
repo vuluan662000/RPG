@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class RangeAttackRadius : AttackRadius
 {
-    public NavMeshAgent agent;
+    
     public Bullet bulletPrefab;
     public Vector3 bulletSpawnOffset = new Vector3(0,2,0);
     public LayerMask layerMask;
@@ -33,9 +33,7 @@ public class RangeAttackRadius : AttackRadius
     protected override IEnumerator Attack()
     {
         WaitForSeconds wait = new WaitForSeconds(attackDelay);
-
         yield return wait;
-
         while (_damageables.Count > 0)
         {
             for(int i = 0;  i < _damageables.Count; i++)
@@ -50,38 +48,38 @@ public class RangeAttackRadius : AttackRadius
                 }    
             }
 
-            if (targetDamageable != null) 
-            {
-                PoolableObject poolableObject = bulletPool.GetObject();
-                if (poolableObject != null) 
-                {
-                    bullet = poolableObject.GetComponent<Bullet>();
-
-                    bullet.transform.position = transform.position + transform.forward * 1.5f + bulletSpawnOffset;
-                    bullet.transform.rotation = agent.transform.rotation;
-
-                    bullet.Spawn(agent.transform.forward, damage, targetDamageable.GetTransform());
-                }
-            }
-            else
-            {
-               // agent.enabled = true;
-                //agent.isStopped = false;
-            }
             yield return wait;
 
             if (targetDamageable == null || !HasLineOfSightTo(targetDamageable.GetTransform()))
             {
                 agent.enabled = true;
-               // agent.isStopped = false;
             }
             _damageables.RemoveAll(DisabledDamageable);             
         }
 
         agent.enabled = true;
-       //agent.isStopped = false;
         attackCoroutine = null;
+    }
 
+    public void TestShot()
+    {
+        if (targetDamageable != null)
+        {
+            PoolableObject poolableObject = bulletPool.GetObject();
+            if (poolableObject != null)
+            {
+                bullet = poolableObject.GetComponent<Bullet>();
+
+                bullet.transform.position = transform.position + transform.forward * 1.5f + bulletSpawnOffset;
+                bullet.transform.rotation = agent.transform.rotation;
+
+                bullet.Spawn(agent.transform.forward, damage, targetDamageable.GetTransform());
+            }
+        }
+        else
+        {
+            agent.enabled = true;
+        }
     }
 
     private bool HasLineOfSightTo(Transform target)

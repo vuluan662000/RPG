@@ -378,7 +378,7 @@ Transform:
   m_GameObject: {fileID: 3604900892347889107}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0.99}
   m_LocalScale: {x: 0.83333325, y: 0.83333325, z: 0.83333325}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -403,7 +403,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 1
   m_Center: {x: 0, y: 0.2, z: 0.2}
 --- !u!114 &1000050205718156087
 MonoBehaviour:
@@ -417,9 +417,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eacbe16619775b54e9e9905715d50661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
   sphereCollider: {fileID: 7541472734679993685}
   damage: 10
   attackDelay: 0.5
+  waitAnimationEnd: 1.02
 --- !u!1 &4316037201773140710
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,6 +553,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 734448606817242933, guid: 5881d53ea5211d04ba6021cb18f5e713,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 734448606817242933, guid: 5881d53ea5211d04ba6021cb18f5e713,
+        type: 3}
       propertyPath: m_AgentTypeID
       value: -334000983
       objectReference: {fileID: 0}
@@ -657,7 +664,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7538208204628173366, guid: 5881d53ea5211d04ba6021cb18f5e713,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3358745111034173458}
+      addedObject: {fileID: 7016563869809568045}
   m_SourcePrefab: {fileID: 100100000, guid: 5881d53ea5211d04ba6021cb18f5e713, type: 3}
 --- !u!1 &1731156945820799144 stripped
 GameObject:
@@ -702,6 +709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRadius: {fileID: 1000050205718156087}
+  rangeAttackRadius: {fileID: 0}
   animator: {fileID: 5713233476421687086}
   movement: {fileID: 3486536417530325752}
   agent: {fileID: 8838911717636980139}
@@ -721,8 +729,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   postMessage: 
   objectName: 
---- !u!65 &3358745111034173458
-BoxCollider:
+--- !u!136 &7016563869809568045
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -739,9 +747,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 0.7}
-  m_Center: {x: 0, y: 1, z: 0.3}
+  serializedVersion: 2
+  m_Radius: 0.6874216
+  m_Height: 2.3717194
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.6858596, z: 0.18620908}
 --- !u!4 &2338551919160163989 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5831988796401126411, guid: 5881d53ea5211d04ba6021cb18f5e713,

@@ -22,7 +22,7 @@ public class MoveState : IState
     {
         if (Input.GetMouseButtonDown(0))
         {
-            StateManager.Instance.ChangeState(new AttackState(_controller,_animation,_vfxManager));
+            StateManager.Instance.ChangeState(_controller._attackState);
         }
         Vector3 _movement = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         _movement.Normalize();

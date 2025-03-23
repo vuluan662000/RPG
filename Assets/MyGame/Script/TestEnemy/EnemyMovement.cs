@@ -65,14 +65,17 @@ public class EnemyMovement : MonoBehaviour
 
     public void Spawn()
     {
-        for (int i = 0; i < wayPoint.Length; i++)
+        if (Triangulation.vertices != null)
         {
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(Triangulation.vertices[Random.Range(0, Triangulation.vertices.Length)], out hit, 2f, agent.areaMask))
+            for (int i = 0; i < wayPoint.Length; i++)
             {
-                wayPoint[i] = hit.position;
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(Triangulation.vertices[Random.Range(0, Triangulation.vertices.Length)], out hit, 2f, agent.areaMask))
+                {
+                    wayPoint[i] = hit.position;
+                }
+                else Debug.LogError("unable to find pos for navmesh near Triangulation vertex");
             }
-            else Debug.LogError("unable to find pos for navmesh near Triangulation vertex");
         }
         onStateChange?.Invoke(EnemyState.Spawn, defautState);
     }

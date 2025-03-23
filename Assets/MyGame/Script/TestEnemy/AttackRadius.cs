@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 [RequireComponent(typeof(SphereCollider))]
 public class AttackRadius : MonoBehaviour
 {
+    public NavMeshAgent agent;
     public SphereCollider sphereCollider;
     protected List<IDamageable> _damageables =  new List<IDamageable>();   
     public int damage = 10;
     public float attackDelay = 0.5f;
+    public float waitAnimationEnd = 1.02f;
     public delegate void AttackEvent(IDamageable target);
 
     public AttackEvent OnAttack;
@@ -21,15 +24,12 @@ public class AttackRadius : MonoBehaviour
     {
         IDamageable damageable = other.GetComponent<IDamageable>();
 
-
         if (damageable != null )
         {
             _damageables.Add(damageable);
 
-            if( attackCoroutine == null )
-            {
-                attackCoroutine = StartCoroutine(Attack());
-            }    
+            if(attackCoroutine != null) StopCoroutine(attackCoroutine);
+            attackCoroutine = StartCoroutine(Attack());   
         }    
     }
 
@@ -52,9 +52,10 @@ public class AttackRadius : MonoBehaviour
     protected virtual IEnumerator Attack()
     {
         WaitForSeconds wait = new WaitForSeconds(attackDelay);
+        WaitForSeconds animationEnd = new WaitForSeconds(waitAnimationEnd);
 
         //yield return wait;
-
+        yield return animationEnd;
         IDamageable closeseDamageable = null;
         float closeseDistance = float.MaxValue;
 
@@ -73,10 +74,12 @@ public class AttackRadius : MonoBehaviour
             if (closeseDamageable != null) 
             {
                 OnAttack?.Invoke(closeseDamageable);
-                
+                yield return wait;
+
                 closeseDamageable.TakeDamage(damage);
+               
+
             }
-            yield return wait;
             closeseDamageable = null ;
             closeseDistance = float.MaxValue;
             _damageables.RemoveAll(DisabledDamageable);
@@ -84,7 +87,7 @@ public class AttackRadius : MonoBehaviour
 
         attackCoroutine = null;
     }
-    
+
     protected bool DisabledDamageable(IDamageable damageable)
     {
         return _damageables != null && !damageable.GetTransform().gameObject.activeSelf;

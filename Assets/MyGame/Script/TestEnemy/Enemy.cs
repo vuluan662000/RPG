@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Enemy : PoolableObject, IDamageable
 {
     public AttackRadius attackRadius;
+    [SerializeField] RangeAttackRadius rangeAttackRadius;
     public Animator animator;
     public EnemyMovement movement;
     public NavMeshAgent agent;
@@ -65,6 +66,11 @@ public class Enemy : PoolableObject, IDamageable
             OnDie?.Invoke(this);
             gameObject.SetActive(false); // Vô hiệu hóa enemy khi chết
         }
+    }
+
+    public void EventShooting()
+    {
+        rangeAttackRadius.TestShot();
     }
 
     public Transform GetTransform()
